@@ -103,3 +103,56 @@ public class Calculator {
 }
 ```
 
+
+
+## 피드백
+
+1. 메인 클래스를 만들어주세요.
+2. 메인 메서드에서 계산기에 해당하는 객체를 만들어주세요.
+3. 계산기의 기능들을 나누어서 메서드를 만들어주세요.
+4. 각 메서드의 기능들을 테스트하는 코드를 만들어주세요.
+5. 인덴트의 깊이를 2 미만으로 만들어주세요.
+6. DisplayName 어노테이션으로 테스트 메서드의 목적을 적어주세요.
+
+## 2차 풀이
+
+1. Main클래스 제작
+
+2. Main클래스에 계산기 객체 생성 및 작동완료
+
+   ```java
+   public class Main {
+       public static void main(String[] args)throws Exception{
+           Calculator calculator = new Calculator();
+           String value = calculator.input();
+           String [] values = calculator.split(value);
+           int result = calculator.operation(values);
+           System.out.println("계산기 결과>>> "+result);
+       }
+   }
+   ```
+
+   
+
+3. 계산기 기능을 나눠서 메서드 제작
+   calculator()메소드에서 구현하던 기능들을 더욱 세분화해서 **filtNumberAndOperation**, **classifyIndex**, **convertChar**, **add**, **substract**, **multiply**, **divid**, **split**로 메소드 마다 최대한 "단일 책임 원칙"을 부여했다.
+
+4. 각 메서드 마다 @Test로 테스트 완료
+
+5. 인덴트의 깊이를 2미만
+   즉 for문에 if문이라던가, 이중포문 사용 금지.
+   메소드를 세분화 하여 해결
+
+6. DisplayName어노테이션 적용 완료(?)
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   
