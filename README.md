@@ -32,3 +32,60 @@
     ```java
     int number = Integer.parseInt("문자열");
     ```
+
+### 풀이
+1. main 메소드를 가지고 있는 StringCalculator 클래스에서 Scanner로 일련의 식을 입력받습니다.
+```java
+public class StringCalculator {
+    static String[] values = new String[0];
+
+    public static void main(String[] args) {
+        Operation operation = new Operation();
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        ...
+```
+
+2. 입력값을 split(" ")메소드를 통해 String 배열에 저장합니다.
+```java
+values = input.split(" ");
+```
+3. 반복문을 통해 배열의 각 값에 접근하여 해당 값이 피연산자인지 연산자인지 메소드 checkValue()를 호출하여 확인합니다.
+```java
+for (String value : values) {
+            operation.checkValue(value);
+        }
+```
+4. 연산자인 경우 Operation 클래스의 전역변수인 operator에 그 종류를 기록해둡니다.
+5. 피연산자인 경우 첫번째 항이라면 결과값을 해당 값으로 세팅하고, 그 이후의 항이라면 기록되어있던 operator의 종류에 따라 결과값에 알맞은 연산을 취합니다.
+```java
+private int result = 0;
+    private String operator;
+    private boolean firstExists = false;
+...
+public void checkValue(String value) {
+        if (value.matches("\\d*(\\.\\d+)?")) {
+            if (firstExists) {
+                operation(Integer.parseInt(value));
+            } else {
+                result = Integer.parseInt(value);
+                firstExists = true;
+            }
+        } else {
+            operator = value;
+        }
+    }
+
+public void operation(int operand) {
+        switch (operator) {
+            case "+":
+                add(operand);
+                break;
+                ...
+    }
+```
+6. 반복문이 끝나면 결과값을 출력합니다.
+```java
+System.out.println(operation.getResult());
+```
+
