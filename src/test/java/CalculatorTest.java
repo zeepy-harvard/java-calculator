@@ -71,7 +71,7 @@ public class CalculatorTest {
     @DisplayName("뺄샘연산")
     public void substractTest(){
         Calculator calculator = new Calculator();
-        assertThat(calculator.substract(10,20)).isEqualTo(-10);
+        assertThat(calculator.subtract(10,20)).isEqualTo(-10);
     }
 
     @Test

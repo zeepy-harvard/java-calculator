@@ -105,7 +105,9 @@ public class Calculator {
 
 
 
-## 피드백
+## 1차 피드백
+
+---------------------------------
 
 1. 메인 클래스를 만들어주세요.
 2. 메인 메서드에서 계산기에 해당하는 객체를 만들어주세요.
@@ -113,6 +115,8 @@ public class Calculator {
 4. 각 메서드의 기능들을 테스트하는 코드를 만들어주세요.
 5. 인덴트의 깊이를 2 미만으로 만들어주세요.
 6. DisplayName 어노테이션으로 테스트 메서드의 목적을 적어주세요.
+
+---------------------------------
 
 ## 2차 풀이
 
@@ -134,25 +138,106 @@ public class Calculator {
 
    
 
-3. 계산기 기능을 나눠서 메서드 제작
-   calculator()메소드에서 구현하던 기능들을 더욱 세분화해서 **filtNumberAndOperation**, **classifyIndex**, **convertChar**, **add**, **substract**, **multiply**, **divid**, **split**로 메소드 마다 최대한 "단일 책임 원칙"을 부여했다.
+3. 계산기 기능을 나눠서 메서드 제작\
+   
+4. calculator()메소드에서 구현하던 기능들을 더욱 세분화해서 **filtNumberAndOperation**, **classifyIndex**, **convertChar**, **add**, **substract**, **multiply**, **divid**, **split**로 메소드 마다 최대한 "단일 책임 원칙"을 부여했다.
 
-4. 각 메서드 마다 @Test로 테스트 완료
+5. 각 메서드 마다 @Test로 테스트 완료
 
-5. 인덴트의 깊이를 2미만
+6. 인덴트의 깊이를 2미만
    즉 for문에 if문이라던가, 이중포문 사용 금지.
    메소드를 세분화 하여 해결
 
-6. DisplayName어노테이션 적용 완료(?)
+7. DisplayName어노테이션 적용 완료(?)
 
-   
 
-   
 
-   
+## 2차  피드백
 
-   
+-----------------------------
 
-   
+1. 접근제어자를 이해하시고 본인의 코드를 수정해주세요.
+2. Calculator 클래스가 모든것을 담당하고 있어요. Input을 담당하는 클래스를 만들어주고, 정적 메소드를 활용해 입력을 받아봅시다.
+3. Main 클래스에서 print문을 직접 사용하고 있어요. Output을 담당하는 클래스를 만들어주고, 정적 메소드를 활용해 출력해봅시다.
 
+---------------------------------------------
+
+## 3차 풀이
+
+-------------------------------
+
+1. 접근 제어자 이해
+
+   * private
+     - private가 선언된 클래스 멤버는 외부에 공개되지 않는다.(직접 접근 불가능)
+     - private가 선언된 클래스 멤버에 접근하기 위해서는 public메소드를 통해서만 접근 가능
+     - **해당 class에서만 접근 가능**
+     - **다른 패키지의 클래스 접근 불가능**
+   * public
+     * public이 선언된 클래스 멤버는 외부로 공개된다.(직접 접근 가능)
+     * public메소드는 private멤버와 프로그램 사이의 인터페이스(interface)역할을 수행한다.
+     * **같은 패키지의 클래스 접근 가능**
+     * **다른 패키지 클래스 접근 가능**
+   * default
+     * 접근 제어자가 지정되지 않으면 자동적으로 default접근 제어를 가지게됨.
+     * **같은 패키지의 클래스 접근가능**
+     * **다른 패키지의 클래스 접근 불가능**
+   * protected
+     * **protected멤버를 선언한 클래스 접근 가능**
+     * **같은 패키지의 클래스 접근가능**
+     * **이 멤버를 선언한 클래스를 상속받은 자식 클래스 접근 가능**
+
+2. Input클래스, Output클래스 생성
+
+   ```java
+   public class Main{
+       public static void main(String[] args){
+           String input = Input.inputs();
+           Output.outputs(inputs);
+       }
+   }
    
+   public class Input{
+       static public String inputs(){
+           Scanner scaneer = new Scanner(System.in);
+           return scanner.nextLine();
+       }
+   }
+   
+   public class Output{
+       static public void outputs(String result){
+           System.out.println("result>>> "+result);
+       }
+   }
+   ```
+
+   * input클래스와 output클래스를 나눠줌으로써 main클래스에서 행하는 일을 분리해준다(**단일책임 원칙**)
+
+   * 정적메소드(static)을 사용함으로써 생성자로 인스턴스 객체를 통해 메소드를 사용하지 않고 ```클래스명.정적메소드``` 로 메소드를 사용할수 있다.
+
+   * 정적메소드를 바로 사용할수 있는 이유는 static을 함으로써 클래스가 메모리에 올라갈 때 정적 메소드가 자동으로 메모리주소가 할당됨으로 항상 같은 메모리주소에서 메소드를 사용하게되기 떄문에 객체를 생성해주지 않아도 된다.
+
+   * ex
+
+     ```java
+     class Test {
+     Test () {}
+     static void m1 () {}
+     void m2 () {}
+     }
+     
+     Test.m1() // O
+     Test.m2() // X
+     
+     Test test = new Test()
+     
+     test.m1() // X
+     test.m2() // O
+     ```
+
+     
+
+-----------------------------------
+
+
+
