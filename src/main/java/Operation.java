@@ -33,24 +33,28 @@ public class Operation {
         }
     }
 
-    private void operation(int secondOperand) {
+    public void operation(int operand) {
         switch (operator) {
             case "+":
-                add(secondOperand);
+                add(operand);
                 break;
             case "-":
-                minus(secondOperand);
+                minus(operand);
                 break;
             case "*":
-                multiple(secondOperand);
+                multiple(operand);
                 break;
             case "/":
-                divide(secondOperand);
+                divide(operand);
                 break;
         }
     }
 
     public int getResult() {
         return result;
+    }
+
+    public void setOperator(String op){
+        operator = op;
     }
 }
