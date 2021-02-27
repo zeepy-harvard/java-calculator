@@ -149,8 +149,6 @@ public class Calculator {
 
 7. DisplayName어노테이션 적용 완료(?)
 
-<<<<<<< HEAD
-
 
 ## 2차  피드백
 
