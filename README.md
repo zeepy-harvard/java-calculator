@@ -1,5 +1,4 @@
-# java-calculator
-문자열 계산기 미션 저장소
+## 계산기를 만들어 봅시다
 
 ## 참고자료
 [노션](https://www.notion.so/151670d41d4a482ca17134c8d2d534bf)
@@ -150,6 +149,7 @@ public class Calculator {
 
 7. DisplayName어노테이션 적용 완료(?)
 
+<<<<<<< HEAD
 
 
 ## 2차  피드백
@@ -238,6 +238,5 @@ public class Calculator {
      
 
 -----------------------------------
-
 
 
