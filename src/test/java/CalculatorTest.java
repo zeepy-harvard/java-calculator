@@ -30,14 +30,13 @@ public class CalculatorTest {
     @DisplayName("Index가_0_일떄_아닐때_구분")
     public void classifyIndexTest(){
         int firstI = 0;
-        int secondI = 0;
+        int secondI = 2;
         int firstResult = 0;
         int secondResult = 0;
         String[] values = {"2","+","3","*","4"};
 
         Calculator calculator = new Calculator();
         secondResult = calculator.classifyIndex(firstI,firstResult,values);
-        secondI +=2;
 
         assertThat(calculator.classifyIndex(firstI,firstResult,values)).isEqualTo(5);
         assertThat(calculator.classifyIndex(secondI,secondResult,values)).isEqualTo(20);

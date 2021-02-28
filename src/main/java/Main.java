@@ -4,7 +4,7 @@ public class Main {
         Run_Calculator();
     }
     static private void Run_Calculator(){
-        Calculator calculator = setCalculatorArg();
+        Calculator calculator = new Calculator();
         String[] values = getStringArr(calculator);
         try{
             int result = calculator.operation(values);
@@ -15,12 +15,7 @@ public class Main {
         }
     }
 
-    static private Calculator setCalculatorArg(){
-        Calculator calculator = new Calculator();
-        return calculator;
-    }
     static private String[] getStringArr(Calculator calculator){
-        calculator = new Calculator();
         String value = Input.inputs();
         String [] values = calculator.split(value);
         return values;
