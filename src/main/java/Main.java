@@ -17,7 +17,7 @@ public class Main {
 
     static private String[] getStringArr(Calculator calculator){
         String value = Input.inputs();
-        String [] values = calculator.split(value);
+        String [] values = Input.split(value);
         return values;
     }
 }

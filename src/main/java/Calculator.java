@@ -14,7 +14,7 @@ public class Calculator {
         return filtNumberAndOperation(values);
     }
 
-    public int filtNumberAndOperation(String[] values) {
+    private int filtNumberAndOperation(String[] values) {
         int result = 0;
         for (int i = 0; i < values.length - 2; i += 2) {
             result = classifyIndex(i, result, values);
@@ -22,7 +22,7 @@ public class Calculator {
         return result;
     }
 
-    public int classifyIndex(int i, int result, String[] values) {
+    private int classifyIndex(int i, int result, String[] values) {
         int firstNumber = Integer.parseInt(values[i]);
         int secondNumber = Integer.parseInt(values[i + SECOND_NUMBER_INDEX]);
         String op = values[i + OPERATION_NUMBER_INDEX];
@@ -32,7 +32,7 @@ public class Calculator {
         return operating(result, secondNumber, op);
     }
 
-    public int operating(int firstNumber, int secondNumber, String op) {
+    private int operating(int firstNumber, int secondNumber, String op) {
         char convertOp = convertChar(op);
         int result = 0;
         if (convertOp == ADD_OPERATION) {
@@ -50,31 +50,27 @@ public class Calculator {
         return result;
     }
 
-    public char convertChar(String op) {
+    private char convertChar(String op) {
         return op.charAt(OPERATION_FIXED_INDEX);
     }
 
-    public int add(int firstNumber, int secondNumber) {
+    private int add(int firstNumber, int secondNumber) {
         return firstNumber + secondNumber;
     }
 
-    public int subtract(int firstNumber, int secondNumber) {
+    private int subtract(int firstNumber, int secondNumber) {
         return firstNumber - secondNumber;
     }
 
-    public int multiply(int firstNumber, int secondNumber) {
+    private int multiply(int firstNumber, int secondNumber) {
         return firstNumber * secondNumber;
     }
 
-    public int divide(int firstNumber, int secondNumber) {
+    private int divide(int firstNumber, int secondNumber) {
         return firstNumber / secondNumber;
     }
 
-    public String[] split(String value) {
-        return value.split(SPACE_BLANK);
-    }
-
-    public void validation(String[] values) {
+    private void validation(String[] values) {
         if (values.length % 2 == 0) throw new IllegalArgumentException("잘못된 연산입력입니다.");
     }
 }
