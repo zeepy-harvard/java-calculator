@@ -11,8 +11,12 @@ public class StringCalculator {
         String input = scanner.nextLine();
         values = input.split(" ");
 
-        for (String value : values) {
-            operation.checkValueType(value);
+        try{
+            for (String value : values) {
+                operation.checkValueType(value);
+            }
+        }catch(Exception e){
+            System.out.println(e.toString());
         }
 
         System.out.println(operation.getResult());

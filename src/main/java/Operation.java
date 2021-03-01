@@ -2,7 +2,6 @@
 public class Operation {
     private int result = 0;
     private String operator;
-    private boolean firstExists = false;
     private boolean isFirst = true;
 
 
@@ -35,7 +34,7 @@ public class Operation {
         }
     }
 
-    public void operation(int operand) {
+    public void operation(int operand) throws IllegalArgumentException {
         switch (operator) {
             case "+":
                 add(operand);
@@ -49,6 +48,7 @@ public class Operation {
             case "/":
                 divide(operand);
                 break;
+            default: throw new IllegalArgumentException("Invalid operator input. Only +, -, *, / works.");
         }
     }
 
