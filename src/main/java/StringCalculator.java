@@ -12,7 +12,7 @@ public class StringCalculator {
         values = input.split(" ");
 
         for (String value : values) {
-            operation.checkValue(value);
+            operation.checkValueType(value);
         }
 
         System.out.println(operation.getResult());

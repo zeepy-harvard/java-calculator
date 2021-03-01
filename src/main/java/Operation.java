@@ -3,6 +3,8 @@ public class Operation {
     private int result = 0;
     private String operator;
     private boolean firstExists = false;
+    private boolean isFirst = true;
+
 
     private void add(int operand) {
         result += operand;
@@ -20,13 +22,13 @@ public class Operation {
         result /= operand;
     }
 
-    public void checkValue(String value) {
-        if (value.matches("\\d*(\\.\\d+)?")) {
-            if (firstExists) {
-                operation(Integer.parseInt(value));
-            } else {
+    public void checkValueType(String value) {
+        if (value.matches("^[0-9]*$")) {
+            if(isFirst){
                 result = Integer.parseInt(value);
-                firstExists = true;
+                isFirst = false;
+            } else {
+                operation(Integer.parseInt(value));
             }
         } else {
             operator = value;

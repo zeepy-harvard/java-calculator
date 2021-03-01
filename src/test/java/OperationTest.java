@@ -2,14 +2,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class OperationTest {
     @Test
     @DisplayName("첫번째 항을 결과값으로 잘 세팅하는지 확인하는 함수")
     public void testCheckValue(){
         Operation op = new Operation();
-        op.checkValue("234");
+        op.checkValueType("234");
         assertThat(op.getResult()).isEqualTo(234);
     }
 
