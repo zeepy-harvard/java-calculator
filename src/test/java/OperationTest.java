@@ -9,7 +9,7 @@ class OperationTest {
     public void testCheckValue(){
         Operation op = new Operation();
         op.setValues("234");
-        op.checkValueType();
+        op.runOperation();
         assertThat(op.getResult()).isEqualTo(234);
     }
 

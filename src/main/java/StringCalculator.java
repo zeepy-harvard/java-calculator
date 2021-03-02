@@ -17,7 +17,7 @@ public class StringCalculator {
 
             try{
                 operation.checkValidation();
-                operation.checkValueType();
+                operation.runOperation();
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }

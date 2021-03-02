@@ -20,7 +20,7 @@ public class Operation {
         result /= operand;
     }
 
-    public void checkValueType() {
+    public void runOperation() {
         for (int i = 0; i < values.length; i++) {
             if (i % 2 == 0) {
                 if (isFirst) {
