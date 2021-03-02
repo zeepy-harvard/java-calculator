@@ -8,7 +8,8 @@ class OperationTest {
     @DisplayName("첫번째 항을 결과값으로 잘 세팅하는지 확인하는 함수")
     public void testCheckValue(){
         Operation op = new Operation();
-        op.checkValueType("234");
+        op.setValues("234");
+        op.checkValueType();
         assertThat(op.getResult()).isEqualTo(234);
     }
 

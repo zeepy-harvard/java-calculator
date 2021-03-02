@@ -1,9 +1,8 @@
-
 public class Operation {
     private int result = 0;
     private String operator;
     private boolean isFirst = true;
-
+    private String[] values;
 
     private void add(int operand) {
         result += operand;
@@ -21,16 +20,26 @@ public class Operation {
         result /= operand;
     }
 
-    public void checkValueType(String value) {
-        if (value.matches("^[0-9]*$")) {
-            if(isFirst){
-                result = Integer.parseInt(value);
-                isFirst = false;
+    public void checkValueType() {
+        for (int i = 0; i < values.length; i++) {
+            if (i % 2 == 0) {
+                if (isFirst) {
+                    result = Integer.parseInt(values[i]);
+                    isFirst = false;
+                } else {
+                    operation(Integer.parseInt(values[i]));
+                }
             } else {
-                operation(Integer.parseInt(value));
+                operator = values[i];
             }
-        } else {
-            operator = value;
+        }
+    }
+
+    public void checkValidation() throws IllegalArgumentException {
+        for (int i = 0; i < values.length; i += 2) {
+            if (!values[i].matches("^[0-9]*$")) {
+                throw new IllegalArgumentException("invalid term.");
+            }
         }
     }
 
@@ -48,7 +57,8 @@ public class Operation {
             case "/":
                 divide(operand);
                 break;
-            default: throw new IllegalArgumentException("Invalid operator input. Only +, -, *, / works.");
+            default:
+                throw new IllegalArgumentException("Invalid operator input. Only +, -, *, / works.");
         }
     }
 
@@ -56,7 +66,12 @@ public class Operation {
         return result;
     }
 
-    public void setOperator(String op){
+    public void setOperator(String op) {
         operator = op;
+    }
+
+    public void setValues(String input) {
+        values = new String[0];
+        values = input.split(" ");
     }
 }

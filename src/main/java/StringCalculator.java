@@ -2,23 +2,29 @@ import java.util.Scanner;
 
 public class StringCalculator {
 
-    static String[] values = new String[0];
-
     public static void main(String[] args) {
-        Operation operation = new Operation();
+        Operation operation;
 
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        values = input.split(" ");
+        while (true){
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.nextLine();
 
-        try{
-            for (String value : values) {
-                operation.checkValueType(value);
+            if(input.equals("-1")){
+                break;
             }
-        }catch(Exception e){
-            System.out.println(e.toString());
-        }
+            operation = new Operation();
+            operation.setValues(input);
 
-        System.out.println(operation.getResult());
+            try{
+                operation.checkValidation();
+                operation.checkValueType();
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
+            System.out.println(operation.getResult());
+        }
+        System.out.println("Exit");
     }
+
 }
