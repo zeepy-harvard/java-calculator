@@ -34,58 +34,68 @@
     ```
 
 ### 풀이
-1. main 메소드를 가지고 있는 StringCalculator 클래스에서 Scanner로 일련의 식을 입력받습니다.
+1. StringCalculator 클래스가 가지고 있는 main 메소드에서 입력을 반복해서 받는 while문이 동작합니다.
+2. 사용자가 수식을 입력하면 Operation 객체를 생성하여 String배열 values에 저장하고, -1 입력 시 종료합니다.
 ```java
-public class StringCalculator {
-    static String[] values = new String[0];
-
-    public static void main(String[] args) {
-        Operation operation = new Operation();
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        ...
-```
-
-2. 입력값을 split(" ")메소드를 통해 String 배열에 저장합니다.
-```java
-values = input.split(" ");
-```
-3. 반복문을 통해 배열의 각 값에 접근하여 해당 값이 피연산자인지 연산자인지 메소드 checkValue()를 호출하여 확인합니다.
-```java
-for (String value : values) {
-            operation.checkValue(value);
-        }
-```
-4. 연산자인 경우 Operation 클래스의 전역변수인 operator에 그 종류를 기록해둡니다.
-5. 피연산자인 경우 첫번째 항이라면 결과값을 해당 값으로 세팅하고, 그 이후의 항이라면 기록되어있던 operator의 종류에 따라 결과값에 알맞은 연산을 취합니다.
-```java
-private int result = 0;
-    private String operator;
-    private boolean firstExists = false;
-...
-public void checkValue(String value) {
-        if (value.matches("\\d*(\\.\\d+)?")) {
-            if (firstExists) {
-                operation(Integer.parseInt(value));
-            } else {
-                result = Integer.parseInt(value);
-                firstExists = true;
+while (true){
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.nextLine();
+            if(input.equals("-1")){
+                break;
             }
-        } else {
-            operator = value;
+            operation = new Operation();
+            operation.setValues(input);
+            ...
+```
+```java
+public void setValues(String input) {
+        values = new String[0];
+        values = input.split(" ");
+    }
+```
+3. 배열에 저장한 후 숫자항이 제대로 입력되었는지 검사하고, 일정 패턴에 맞는 항이 아니라면 예외를 발생시킵니다.
+```java
+public void checkValidation() throws IllegalArgumentException {
+        for (int i = 0; i < values.length; i += 2) {
+            if (!values[i].matches("^[0-9]*$")) {
+                throw new IllegalArgumentException("invalid term.");
+            }
         }
     }
-
-public void operation(int operand) {
+```
+4. 짝수(0, 2, 4..)인덱스는 상수로, 홀수(1, 3, 5..)인덱스는 연산자로 구분합니다. 
+연산자라면 객체의 operator 변수에 해당 연산자를 설정합니다. 이후 나오는 상수항이 해당 연산자가 무엇인지에 따라 알맞게 연산될 것입니다. 첫번재 상수라면 result 변수를 그 수로 세팅시키고, 그 이후로의 상수라면 연산 메소드 operation을 호출합니다.
+```java
+public void runOperation() {
+        for (int i = 0; i < values.length; i++) {
+            if (i % 2 == 0) {
+                if (isFirst) {
+                    result = Integer.parseInt(values[i]);
+                    isFirst = false;
+                } else {
+                    operation(Integer.parseInt(values[i]));
+                }
+            } else {
+                operator = values[i];
+            }
+        }
+    }
+```
+5. 연산 시 +, -, *, / 이외의 연산자가 operator에 들어있다면 예외를 발생시킵니다.
+```java
+public void operation(int operand) throws IllegalArgumentException {
         switch (operator) {
             case "+":
                 add(operand);
                 break;
-                ...
+            ...
+
+            default:
+                throw new IllegalArgumentException("Invalid operator input. Only +, -, *, / works.");
+        }
     }
 ```
-6. 반복문이 끝나면 결과값을 출력합니다.
+6. 연산이 끝나면 반복문 끝에서 결과를 출력합니다.
 ```java
 System.out.println(operation.getResult());
 ```
-
