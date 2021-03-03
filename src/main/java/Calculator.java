@@ -1,12 +1,12 @@
 public class Calculator {
-    static private final int OPERATION_NUMBER_INDEX = 1;
-    static private final int SECOND_NUMBER_INDEX = 2;
-    static private final char ADD_OPERATION = '+';
-    static private final char SUBSTRACT_OPERATION = '-';
-    static private final char MULTIPLY_OPERATION = '*';
-    static private final char DIVIDED_OPERATION = '/';
-    static private final int OPERATION_FIXED_INDEX = 0;
-    static private final String SPACE_BLANK = " ";
+    private static final int OPERATION_NUMBER_INDEX = 1;
+    private static final int SECOND_NUMBER_INDEX = 2;
+    private static final char ADD_OPERATION = '+';
+    private static final char SUBSTRACT_OPERATION = '-';
+    private static final char MULTIPLY_OPERATION = '*';
+    private static final char DIVIDED_OPERATION = '/';
+    private static final int OPERATION_FIXED_INDEX = 0;
+    private static final String SPACE_BLANK = " ";
 
     public int operation(String[] values) {
         validation(values);
@@ -34,20 +34,19 @@ public class Calculator {
 
     private int operating(int firstNumber, int secondNumber, String op) {
         char convertOp = convertChar(op);
-        int result = 0;
         if (convertOp == ADD_OPERATION) {
-            result = add(firstNumber, secondNumber);
+            return add(firstNumber, secondNumber);
         }
         if (convertOp == SUBSTRACT_OPERATION) {
-            result = subtract(firstNumber, secondNumber);
+            return subtract(firstNumber, secondNumber);
         }
         if (convertOp == MULTIPLY_OPERATION) {
-            result = multiply(firstNumber, secondNumber);
+            return multiply(firstNumber, secondNumber);
         }
         if (convertOp == DIVIDED_OPERATION) {
-            result = divide(firstNumber, secondNumber);
+            return divide(firstNumber, secondNumber);
         }
-        return result;
+        throw new RuntimeException("올바르지 않는 연산자입니다.");
     }
 
     private char convertChar(String op) {
