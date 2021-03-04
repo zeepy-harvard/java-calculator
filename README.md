@@ -34,68 +34,63 @@
     ```
 
 ### 풀이
-1. StringCalculator 클래스가 가지고 있는 main 메소드에서 입력을 반복해서 받는 while문이 동작합니다.
-2. 사용자가 수식을 입력하면 Operation 객체를 생성하여 String배열 values에 저장하고, -1 입력 시 종료합니다.
+1. main에서 Scanner를 통해 수식을 입력받습니다. 입력값이 -1이라면 반복문을 나가 종료합니다.
 ```java
-while (true){
-            Scanner scanner = new Scanner(System.in);
-            String input = scanner.nextLine();
-            if(input.equals("-1")){
-                break;
-            }
-            operation = new Operation();
-            operation.setValues(input);
-            ...
-```
-```java
-public void setValues(String input) {
-        values = new String[0];
-        values = input.split(" ");
-    }
-```
-3. 배열에 저장한 후 숫자항이 제대로 입력되었는지 검사하고, 일정 패턴에 맞는 항이 아니라면 예외를 발생시킵니다.
-```java
-public void checkValidation() throws IllegalArgumentException {
-        for (int i = 0; i < values.length; i += 2) {
-            if (!values[i].matches("^[0-9]*$")) {
-                throw new IllegalArgumentException("invalid term.");
-            }
-        }
-    }
-```
-4. 짝수(0, 2, 4..)인덱스는 상수로, 홀수(1, 3, 5..)인덱스는 연산자로 구분합니다. 
-연산자라면 객체의 operator 변수에 해당 연산자를 설정합니다. 이후 나오는 상수항이 해당 연산자가 무엇인지에 따라 알맞게 연산될 것입니다. 첫번재 상수라면 result 변수를 그 수로 세팅시키고, 그 이후로의 상수라면 연산 메소드 operation을 호출합니다.
-```java
-public void runOperation() {
-        for (int i = 0; i < values.length; i++) {
-            if (i % 2 == 0) {
-                if (isFirst) {
-                    result = Integer.parseInt(values[i]);
-                    isFirst = false;
-                } else {
-                    operation(Integer.parseInt(values[i]));
-                }
-            } else {
-                operator = values[i];
-            }
-        }
-    }
-```
-5. 연산 시 +, -, *, / 이외의 연산자가 operator에 들어있다면 예외를 발생시킵니다.
-```java
-public void operation(int operand) throws IllegalArgumentException {
-        switch (operator) {
-            case "+":
-                add(operand);
-                break;
-            ...
+while (true) {
+    Scanner scanner = new Scanner(System.in);
+    String input = scanner.nextLine();
 
-            default:
-                throw new IllegalArgumentException("Invalid operator input. Only +, -, *, / works.");
+    if (input.equals("-1")) {
+         break;
+    }
+    ...
+}
+```
+2. Operation 객체를 생성하여 runOperation 메소드에 매개변수로 수식을 전달하고, 그 결과값을 result 변수에 받아 출력합니다.
+```java
+operation = new Operation();
+result = operation.runOperation(input);
+System.out.println("계산 결과 :" + result);
+```
+3. runOperation은 checkValidation 메소드를 호출해 수식의 유효성을 검사하고, getResult 메소드를 통해 최종 결과값을 받습니다. 최종 결과값은 main에게 전달됩니다.
+```java
+try {
+    checkValidation(values);
+    result = Integer.parseInt(values[0]);
+    result = getResult(values, result, operator);
+} catch (Exception e) {
+    System.out.println(e.getMessage());
+}
+
+```
+4. checkValidation 메소드는 짝수번째 항들이 상수의 패턴을 만족하는지 검사합니다. 아닐 시, 예외를 발생시킵니다.
+```java
+for (int i = 0; i < values.length; i += 2) {
+    if (!values[i].matches("^[0-9]*$")) {
+        throw new IllegalArgumentException("invalid term.");
+    }
+}
+```
+5. getResult 메소드는 수식을 담은 배열 values에 차례대로 접근합니다. 피연산자일 경우 operation 메소드를 호출하여 중간 결과값을 갱신하고, 연산자일 경우 operator 변수에 해당 연산자를 세팅합니다.
+```java
+private int getResult(String[] values, int result, String operator) {
+    for (int i = 1; i < values.length; i++) {
+        if (i % 2 == 0) {
+            result = operation(Integer.parseInt(values[i]), operator, result);
+        } else {
+            operator = values[i];
         }
     }
-```
-6. 연산이 끝나면 반복문 끝에서 결과를 출력합니다.
-```java
-System.out.println(operation.getResult());
+    return result;
+}
+
+private int operation(int operand, String operator, int result) throws IllegalArgumentException {
+    switch (operator) {
+        case "+":
+            result += operand;
+            break;
+            ...
+    }
+    return result;
+}
 ```
