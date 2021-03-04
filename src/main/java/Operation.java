@@ -5,6 +5,10 @@ public class Operation {
     private String operator;
     private String[] values;
 
+    public Operation(String input) {
+        values = input.split(" ");
+    }
+
     private void add(int operand) {
         result += operand;
     }
@@ -19,11 +23,6 @@ public class Operation {
 
     private void divide(int operand) {
         result /= operand;
-    }
-
-    public Operation(String input) {
-        values = new String[0];
-        values = input.split(" ");
     }
 
     public int runOperation() {
@@ -66,13 +65,5 @@ public class Operation {
             default:
                 throw new IllegalArgumentException("Invalid operator input. Only +, -, *, / works.");
         }
-    }
-
-    public void setOperator(String op) {
-        operator = op;
-    }
-
-    public void setValues(String input) {
-
     }
 }
