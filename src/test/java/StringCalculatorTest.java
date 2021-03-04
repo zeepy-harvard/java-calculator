@@ -1,16 +1,39 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class StringCalculatorTest {
-    @Test
-    @DisplayName("String배열에 입력값이 알맞게 들어가는지 확인하는 함수")
-    public void testSplit(){
-        Operation op = new Operation("2 + 3 * 4 / 2");
+    private static Stream<Arguments> provideInputData() {
+        return Stream.of(
+                Arguments.of("2 * 6 - 1 * 2", 22),
+                Arguments.of("13", 13),
+                Arguments.of("10 - 2 * 2", 16)
+        );
+    }
 
-        assertThat(values[0]).isEqualTo("2");
-        assertThat(values[6]).isEqualTo("2");
+    @MethodSource("provideInputData")
+    @ParameterizedTest
+    public void testCalculation(String inputData, int result) {
+        Operation operation = new Operation(inputData);
+        assertThat(operation.runOperation()).isEqualTo(result);
+    }
+
+    @Test
+    @DisplayName("입력된 식의 띄어쓰기가 잘못되었을 때 예외처리")
+    public void testCheckValidation() {
+        String inputdata = "12+ 4";
+        Operation operation = new Operation(inputdata);
+
+        assertThatThrownBy(() -> {
+            operation.checkValidation();
+        }).isInstanceOf(RuntimeException.class)
+                .hasMessage("invalid term.");
     }
 }
