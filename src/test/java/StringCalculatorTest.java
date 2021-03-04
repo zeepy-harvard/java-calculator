@@ -21,19 +21,19 @@ class StringCalculatorTest {
     @MethodSource("provideInputData")
     @ParameterizedTest
     public void testCalculation(String inputData, int result) {
-        Operation operation = new Operation(inputData);
-        assertThat(operation.runOperation()).isEqualTo(result);
+        Operation operation = new Operation();
+        assertThat(operation.runOperation(inputData)).isEqualTo(result);
     }
 
     @Test
     @DisplayName("입력된 식의 띄어쓰기가 잘못되었을 때 예외처리")
     public void testCheckValidation() {
-        String inputdata = "12+ 4";
-        Operation operation = new Operation(inputdata);
+        String wrongInputData = "12+ 4";
+        Operation operation = new Operation();
 
         assertThatThrownBy(() -> {
-            operation.checkValidation();
-        }).isInstanceOf(RuntimeException.class)
+            operation.runOperation(wrongInputData);
+        }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("invalid term.");
     }
 }
