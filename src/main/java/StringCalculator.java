@@ -12,19 +12,25 @@ public class StringCalculator {
             if(input.equals("-1")){
                 break;
             }
-            operation = new Operation();
-            operation.setValues(input);
+            operation = new Operation(input);
 
-            try{
-                operation.checkValidation();
-                operation.runOperation();
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
-
-            System.out.println(operation.getResult());
+            start(operation);
         }
         System.out.println("Exit");
     }
+
+    private static void start(Operation operation) {
+
+        int result = 0;
+
+        try{
+            operation.checkValidation();
+            result = operation.runOperation();
+            System.out.println("계산 결과 :" + result);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
 
 }

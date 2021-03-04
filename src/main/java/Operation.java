@@ -1,7 +1,8 @@
+import java.util.Scanner;
+
 public class Operation {
     private int result = 0;
     private String operator;
-    private boolean isFirst = true;
     private String[] values;
 
     private void add(int operand) {
@@ -20,19 +21,24 @@ public class Operation {
         result /= operand;
     }
 
-    public void runOperation() {
-        for (int i = 0; i < values.length; i++) {
+    public Operation(String input) {
+        values = new String[0];
+        values = input.split(" ");
+    }
+
+    public int runOperation() {
+
+        result = Integer.parseInt(values[0]);
+
+        for (int i = 1; i < values.length; i++) {
             if (i % 2 == 0) {
-                if (isFirst) {
-                    result = Integer.parseInt(values[i]);
-                    isFirst = false;
-                } else {
-                    operation(Integer.parseInt(values[i]));
-                }
+                operation(Integer.parseInt(values[i]));
             } else {
                 operator = values[i];
             }
         }
+
+        return result;
     }
 
     public void checkValidation() throws IllegalArgumentException {
@@ -62,16 +68,11 @@ public class Operation {
         }
     }
 
-    public int getResult() {
-        return result;
-    }
-
     public void setOperator(String op) {
         operator = op;
     }
 
     public void setValues(String input) {
-        values = new String[0];
-        values = input.split(" ");
+
     }
 }

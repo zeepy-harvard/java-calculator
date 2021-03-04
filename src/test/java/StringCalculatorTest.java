@@ -8,9 +8,7 @@ class StringCalculatorTest {
     @Test
     @DisplayName("String배열에 입력값이 알맞게 들어가는지 확인하는 함수")
     public void testSplit(){
-        Operation op = new Operation();
-        String input = "2 + 3 * 4 / 2";
-        String[] values = input.split(" ");
+        Operation op = new Operation("2 + 3 * 4 / 2");
 
         assertThat(values[0]).isEqualTo("2");
         assertThat(values[6]).isEqualTo("2");
