@@ -1,46 +1,35 @@
 import java.util.Scanner;
 
 public class Operation {
-    private int result = 0;
-    private String operator;
-    private String[] values;
 
-    public Operation(String input) {
-        values = input.split(" ");
-    }
+    public int runOperation(String input) {
+        String[] values = input.split(" ");
+        int result = 0;
+        String operator = "";
 
-    private void add(int operand) {
-        result += operand;
-    }
-
-    private void minus(int operand) {
-        result -= operand;
-    }
-
-    private void multiple(int operand) {
-        result *= operand;
-    }
-
-    private void divide(int operand) {
-        result /= operand;
-    }
-
-    public int runOperation() {
-
-        result = Integer.parseInt(values[0]);
-
-        for (int i = 1; i < values.length; i++) {
-            if (i % 2 == 0) {
-                operation(Integer.parseInt(values[i]));
-            } else {
-                operator = values[i];
-            }
+        try {
+            checkValidation(values);
+            result = Integer.parseInt(values[0]);
+            result = getResult(values, result, operator);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
         return result;
     }
 
-    public void checkValidation() throws IllegalArgumentException {
+    private int getResult(String[] values, int result, String operator) {
+        for (int i = 1; i < values.length; i++) {
+            if (i % 2 == 0) {
+                result = operation(Integer.parseInt(values[i]), operator, result);
+            } else {
+                operator = values[i];
+            }
+        }
+        return result;
+    }
+
+    private void checkValidation(String[] values) throws IllegalArgumentException {
         for (int i = 0; i < values.length; i += 2) {
             if (!values[i].matches("^[0-9]*$")) {
                 throw new IllegalArgumentException("invalid term.");
@@ -48,22 +37,23 @@ public class Operation {
         }
     }
 
-    public void operation(int operand) throws IllegalArgumentException {
+    private int operation(int operand, String operator, int result) throws IllegalArgumentException {
         switch (operator) {
             case "+":
-                add(operand);
+                result += operand;
                 break;
             case "-":
-                minus(operand);
+                result -= operand;
                 break;
             case "*":
-                multiple(operand);
+                result *= operand;
                 break;
             case "/":
-                divide(operand);
+                result /= operand;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid operator input. Only +, -, *, / works.");
         }
+        return result;
     }
 }
