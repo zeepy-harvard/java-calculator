@@ -9,8 +9,7 @@ public class Operation {
 
         try {
             checkValidation(values);
-            result = Integer.parseInt(values[0]);
-            result = getResult(values, result, operator);
+            result = getResult(values, operator);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -18,7 +17,10 @@ public class Operation {
         return result;
     }
 
-    private int getResult(String[] values, int result, String operator) {
+    private int getResult(String[] values, String operator) {
+
+        int result = Integer.parseInt(values[0]);
+
         for (int i = 1; i < values.length; i++) {
             if (i % 2 == 0) {
                 result = operation(Integer.parseInt(values[i]), operator, result);
